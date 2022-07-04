@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/registration.css}" media="all" type="text/css"/>
+    <title>Registration</title>
+</head>
+<body>
+<div class="registration-page">
+<div class="registration-error" th:if="${param.logout}">
+    You have been logged out.</div>
+<div class="registration-error" th:if="${param.success}">
+    <div class="alert alert-info">You've successfully registered
+        to our awesome app!</div>
+</div>
+    <div class="register-welcome">Register</div>
+<form th:action="@{/auth/registrNewUser}" th:object="${user}" method="post">
+
+    <div>
+        <input type="text" id="first-name" placeholder="FirstName" th:field="*{firstName}"/>
+        <p class="field-error" th:each="error: ${#fields.errors('firstName')}"
+           th:text="${error}">Validation error</p>
+    </div>
+    <div>
+        <input type="text" id="last-name" placeholder="LastName" th:field="*{lastName}"/>
+        <p class="field-error" th:each="error: ${#fields.errors('lastName')}"
+           th:text="${error}">Validation error</p>
+    </div>
+    <div>
+        <input type="text" id="email" placeholder="Email" th:field="*{email}"/>
+        <p class="field-error" th:each="error: ${#fields.errors('email')}"
+           th:text="${error}">Validation error</p>
+    </div>
+    <div>
+        <input type="text" id="username" placeholder="Username" th:field="*{username}"/>
+        <p class="field-error" th:each="error: ${#fields.errors('username')}"
+           th:text="${error}">Validation error</p>
+    </div>
+    <div>
+       <select th:field="*{admin}">
+           <option value="true">Admin</option>
+           <option value="false">User</option>
+       </select>
+    </div>
+    <div>
+        <input type="password" id="password" placeholder='••••••••••••••' th:field="*{password}"/>
+        <p class="field-error" th:each="error: ${#fields.errors('password')}"
+           th:text="${error}">Validation error</p>
+    </div>
+    <div>
+        <label for="confirmPassword">Confirm Password</label>
+        <input type="password" id="confirmPassword" placeholder='••••••••••••••' th:field="*{matchingPassword}"/>
+    </div>
+    <input class="btn-register" type="submit" value="Create account" />
+</form>
+</div>
+</body>
+</html>

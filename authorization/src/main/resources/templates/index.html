@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="stylesheet" th:href="@{/css/style.css}" media="all" type="text/css"/>
+
+    <title>Home Page</title>
+</head>
+<body>
+    <div sec:authorize="isAnonymous()" class="home-welcome">
+        <p class="header-welcome">Welcome!</p>
+        <p class="header-msg">What do you want to do?</p>
+        <div class="home-buttons">
+            <div class="navigation-login-ref" sec:authorize="isAnonymous()"><a th:href="@{/auth/login}">LogIn</a></div>
+            <div class="navigation" sec:authorize="isAnonymous()"><a th:href="@{/auth/registration}">Register Now</a></div>
+        </div>
+    </div>
+
+    <div sec:authorize="isAuthenticated()" class="home-welcome">
+        <p class="header-welcome">Welcome,
+            <span sec:authentication="name">Username</span></p>
+        <div class="home-buttons">
+            <div class="navigation-logout-ref" sec:authorize="isAuthenticated()"><a th:href="@{/auth/logout}">LogOut</a></div>
+            <div class="role-check" sec:authorize="isAuthenticated() and hasAuthority('ROLE_ADMIN')"><a th:href="@{/auth/admin}">Settings</a></div>
+        </div>
+    </div>
+</body>
+</html>
