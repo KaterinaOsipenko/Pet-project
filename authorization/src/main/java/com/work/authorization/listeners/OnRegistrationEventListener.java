@@ -45,8 +45,5 @@ public class OnRegistrationEventListener implements ApplicationListener<OnRegist
         email.setSubject(subject);
         email.setFrom("kate.osipenko30@gmail.com");
         email.setText(message + "\r\n" + "http://localhost:8765/auth" + confirmationUrl);
-        System.out.println("Message send...1");
-        javaMailSender.send(email);
-        System.out.println("Message send...");
     }
 }

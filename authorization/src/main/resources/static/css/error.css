@@ -11,6 +11,10 @@ body {
     background-size: cover;
     display: flex;
     font-family: Assistant, sans-serif;
+    display: flex;
+    gap: 4em;
+    padding: 3em;
+    flex-direction: column;
     min-height: 90vh;
 }
 
@@ -37,8 +41,10 @@ body:after{
 
 .description {
     font-size: 2em;
+    color: white;
 }
 
 .help {
     font-size: 1em;
+    color: white;
 }

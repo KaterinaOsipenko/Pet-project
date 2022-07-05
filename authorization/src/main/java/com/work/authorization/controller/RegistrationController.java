@@ -1,5 +1,7 @@
 package com.work.authorization.controller;
 
+import com.work.authorization.exception.PasswordMatcherException;
+import com.work.authorization.exception.UserAlreadyExistException;
 import com.work.authorization.model.OnRegistrationCompleteEvent;
 import com.work.authorization.model.User;
 import com.work.authorization.model.VerificationToken;
@@ -40,25 +42,24 @@ public class RegistrationController {
 
     @PostMapping("/registrNewUser")
     public String newUser(@ModelAttribute("user") @Valid UserDTO userDTO, BindingResult bindingResult, HttpServletRequest request) {
-        User existing = userService.findByEmail(userDTO.getEmail());
-        User checkUsername = userService.findByUsername(userDTO.getUsername());
-        if (existing != null) {
-            bindingResult.rejectValue("email", "404", "There is already an account registered with that email");
-        }
-        if (checkUsername != null) {
-            bindingResult.rejectValue("username", "404", "There is already an account registered with that username! Please, chose another one.");
-
-        }
-        if (!userDTO.getPassword().equals(userDTO.getMatchingPassword())) {
-            bindingResult.rejectValue("password", "404", "Error confirmation isn`t true!");
-        }
         if (bindingResult.hasErrors()) {
             return "registration";
         }
-        User user = userService.registerUser(userDTO);
-        String appUrl = request.getContextPath();
-        eventPublisher.publishEvent(new OnRegistrationCompleteEvent(appUrl, user, request.getLocale()));
-        System.out.println("Verify!!!!!!!!!!!!!!!!!!!");
+        try {
+            User user = userService.registerUser(userDTO);
+            String appUrl = request.getContextPath();
+            eventPublisher.publishEvent(new OnRegistrationCompleteEvent(appUrl, user, request.getLocale()));
+        } catch (UserAlreadyExistException e) {
+            if (e.getMessage().contains("email")) {
+                bindingResult.rejectValue("email", "404", e.getMessage());
+            } else {
+                bindingResult.rejectValue("username", "404", e.getMessage());
+            }
+            return "registration";
+        } catch (PasswordMatcherException e) {
+            bindingResult.rejectValue("password", "404", e.getMessage());
+            return "registration";
+        }
         return "index";
     }
 
