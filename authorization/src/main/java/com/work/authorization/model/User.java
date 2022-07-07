@@ -1,12 +1,6 @@
 package com.work.authorization.model;
 
-import com.sun.istack.NotNull;
-import com.work.authorization.validator.EmailValid;
-import org.hibernate.annotations.Type;
-
 import javax.persistence.*;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "users")
@@ -116,9 +110,7 @@ public class User {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof User)) return false;
-
-        User user = (User) o;
+        if (!(o instanceof User user)) return false;
 
         if (isAdmin() != user.isAdmin()) return false;
         if (isEnabled() != user.isEnabled()) return false;

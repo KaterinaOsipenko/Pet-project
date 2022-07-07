@@ -60,7 +60,7 @@ public class RegistrationController {
             bindingResult.rejectValue("password", "404", e.getMessage());
             return "registration";
         }
-        return "index";
+        return "confirmPage";
     }
 
     @GetMapping("/registrationConfirm")

@@ -8,9 +8,6 @@ import java.util.regex.Pattern;
 
 public class EmailValidator implements ConstraintValidator<EmailValid, String> {
 
-    private Pattern pattern;
-    private Matcher matcher;
-
     private static final String EMAIL_PATTERN = "^([a-zA-Z0-9]+.)([_.])([a-zA-Z0-9]+)(\\d)?@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)$";
     @Override
     public void initialize(EmailValid constraintAnnotation) {
@@ -19,8 +16,8 @@ public class EmailValidator implements ConstraintValidator<EmailValid, String> {
 
     @Override
     public boolean isValid(String s, ConstraintValidatorContext constraintValidatorContext) {
-        pattern = Pattern.compile(EMAIL_PATTERN);
-        matcher = pattern.matcher(s);
+        Pattern pattern = Pattern.compile(EMAIL_PATTERN);
+        Matcher matcher = pattern.matcher(s);
         return matcher.matches();
     }
 }

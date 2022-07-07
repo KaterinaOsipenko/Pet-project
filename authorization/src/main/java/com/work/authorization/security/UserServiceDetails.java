@@ -9,9 +9,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -31,7 +28,7 @@ public class UserServiceDetails implements UserDetailsService {
     }
 
     private List<GrantedAuthority> getAuthorities(User user) {
-        List<GrantedAuthority> authorities = new ArrayList<>();
+        List<GrantedAuthority> authorities;
         if (user.isAdmin()) {
             authorities = AuthorityUtils.createAuthorityList("ROLE_ADMIN");
         } else {

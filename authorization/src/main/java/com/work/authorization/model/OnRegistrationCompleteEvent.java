@@ -1,11 +1,8 @@
 package com.work.authorization.model;
 
-import com.work.authorization.model.User;
 import org.springframework.context.ApplicationEvent;
 
-import java.time.Clock;
 import java.util.Locale;
-import java.util.PrimitiveIterator;
 
 public class OnRegistrationCompleteEvent extends ApplicationEvent {
 

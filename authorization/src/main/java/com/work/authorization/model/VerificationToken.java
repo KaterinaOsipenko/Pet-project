@@ -1,7 +1,5 @@
 package com.work.authorization.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Calendar;
